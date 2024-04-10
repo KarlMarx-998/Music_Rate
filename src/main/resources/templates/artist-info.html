@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Artist Info</title>
+</head>
+<body>
+<h2>Artist Info</h2>
+<div th:if="${error}" th:text="${error}"></div>
+<div th:if="${artist}">
+  <p>Name: <span th:text="${artist.getName()}"></span></p>
+  <p>Tags:
+    <span th:each="tag, iterStat : ${artist.getTags()}">
+      <span th:text="${tag}"></span>
+      <span th:if="${!iterStat.last}">, </span>
+    </span>
+  <p/>
+  <p>Summary:
+    <span th:text="${artist.getWikiSummary()}"></span>
+  </p>
+
+  <p>Top Albums:
+  <ul>
+    <li th:each="album : ${albums}">
+      <span th:text="${album}"></span>
+<!--      <a href="#" th:text="${album}" th:attr=" data-artistName=${artistBean.getName()},data-albumName=${album}">-->
+
+<!--      </a>-->
+    </li>
+  </ul></p>
+
+<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+<!--  <script th:inline="javascript">-->
+<!--    $(document).ready(function() {-->
+<!--      $('a').click(function(event) {-->
+<!--        event.preventDefault();-->
+<!--        var link = document.querySelector('a');-->
+<!--        var albumName = link.getAttribute('data-albumName');-->
+<!--        var artistName = link.getAttribute('data-artistName');-->
+
+<!--        $.ajax({-->
+<!--          url: '/albumInfo',-->
+<!--          type: 'GET',-->
+<!--          data: {artistName: artistName, albumName: albumName},-->
+<!--          success: function(data) {-->
+<!--            window.location.href = '/album-info?albumName=' + albumName;-->
+<!--            alert('Album Info: ' + data);-->
+<!--          },-->
+<!--          error: function(xhr, status, error) {-->
+<!--            console.log('Error:', error);-->
+<!--          }-->
+<!--        });-->
+<!--      });-->
+<!--    });-->
+<!--  </script>-->
+
+
+  <p>Similar artists:
+  <ul>
+    <li th:each="similar : ${artist.getSimilar()}">
+      <span th:text="${similar.getName()}"></span>
+    </li>
+  </ul>
+  </p>
+
+  <p>Listeners: <span th:text="${artist.getListeners()}"></span>
+  </p>
+</div>
+</body>
+</html>
