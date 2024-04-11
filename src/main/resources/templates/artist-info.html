@@ -8,6 +8,7 @@
 <div th:if="${error}" th:text="${error}"></div>
 <div th:if="${artist}">
   <p>Name: <span th:text="${artist.getName()}"></span></p>
+  <p>Rating: <span th:text="${myArtist.getRating()}"></span></p>
   <p>Tags:
     <span th:each="tag, iterStat : ${artist.getTags()}">
       <span th:text="${tag}"></span>

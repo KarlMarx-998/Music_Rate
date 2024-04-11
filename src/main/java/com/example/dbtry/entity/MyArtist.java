@@ -11,6 +11,8 @@ public class MyArtist {
 
     private String name;
 
+    private Double rating;
+
     private String tags;
 
     private String summary;
@@ -20,9 +22,10 @@ public class MyArtist {
 
     public MyArtist(){};
 
-    public MyArtist(Long id, String name, String tags, String summary, int listeners) {
+    public MyArtist(Long id, String name,Double rating, String tags, String summary, int listeners) {
         this.id = id;
         this.name = name;
+        this.rating = rating;
         this.tags = tags;
         this.summary = summary;
         this.listeners = listeners;
@@ -46,6 +49,14 @@ public class MyArtist {
 
     public String getTags() {
         return tags;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = 10.0 ;
     }
 
     public void setTags(String tags) {
