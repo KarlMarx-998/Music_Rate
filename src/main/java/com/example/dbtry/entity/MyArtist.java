@@ -17,6 +17,7 @@ public class MyArtist {
 
     private int listeners;
 
+
     public MyArtist(){};
 
     public MyArtist(Long id, String name, String tags, String summary, int listeners) {
