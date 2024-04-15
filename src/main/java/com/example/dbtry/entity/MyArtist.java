@@ -56,7 +56,7 @@ public class MyArtist {
     }
 
     public void setRating(Double rating) {
-        this.rating = 10.0 ;
+        this.rating = rating ;
     }
 
     public void setTags(String tags) {

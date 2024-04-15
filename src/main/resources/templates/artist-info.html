@@ -22,37 +22,39 @@
   <p>Top Albums:
   <ul>
     <li th:each="album : ${albums}">
-      <span th:text="${album}"></span>
-<!--      <a href="#" th:text="${album}" th:attr=" data-artistName=${artistBean.getName()},data-albumName=${album}">-->
+      <a href="#" th:text="${album}" th:attr=" data-artistName=${artist.getName()},data-albumName=${album}">
 
-<!--      </a>-->
+      </a>
     </li>
   </ul></p>
 
-<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
-<!--  <script th:inline="javascript">-->
-<!--    $(document).ready(function() {-->
-<!--      $('a').click(function(event) {-->
-<!--        event.preventDefault();-->
-<!--        var link = document.querySelector('a');-->
-<!--        var albumName = link.getAttribute('data-albumName');-->
-<!--        var artistName = link.getAttribute('data-artistName');-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script th:inline="javascript">
+    $(document).ready(function() {
+      $('a').click(function(event) {
+        event.preventDefault();
+        var link = $(this); // Получаем ссылку, на которую пользователь кликнул
+        var albumName = link.attr('data-albumName');
+        var artistName = link.attr('data-artistName');
+        //var link = (document.querySelector('a');
+        //var albumName = link.getAttribute('data-albumName');
+        //var artistName = link.getAttribute('data-artistName');
 
-<!--        $.ajax({-->
-<!--          url: '/albumInfo',-->
-<!--          type: 'GET',-->
-<!--          data: {artistName: artistName, albumName: albumName},-->
-<!--          success: function(data) {-->
-<!--            window.location.href = '/album-info?albumName=' + albumName;-->
-<!--            alert('Album Info: ' + data);-->
-<!--          },-->
-<!--          error: function(xhr, status, error) {-->
-<!--            console.log('Error:', error);-->
-<!--          }-->
-<!--        });-->
-<!--      });-->
-<!--    });-->
-<!--  </script>-->
+        $.ajax({
+          url: '/album-info',
+          type: 'GET',
+          data: {artistName: artistName, albumName: albumName},
+          success: function(data) {
+            window.location.href = '/album-info?artistName=' + artistName + '&albumName=' + albumName;
+            alert('Album Info: ' + data);
+          },
+          error: function(xhr, status, error) {
+            console.log('Error:', error);
+          }
+        });
+      });
+    });
+  </script>
 
 
   <p>Similar artists:

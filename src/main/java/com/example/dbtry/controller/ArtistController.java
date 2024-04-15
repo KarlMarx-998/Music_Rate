@@ -1,4 +1,4 @@
-package com.example.dbtry.controllers;
+package com.example.dbtry.controller;
 
 import com.example.dbtry.ArtistMapper;
 import com.example.dbtry.DAO.ArtistRepository;
@@ -32,7 +32,7 @@ public class ArtistController {
     public String searchArtist(@RequestParam("artistName") String artistName, Model model){
         Caller.getInstance().setUserAgent("MusicRate");
 
-        Optional<MyArtist> existingArtistOptional = Optional.ofNullable(artistRepository.findByName(artistName));
+        Optional<MyArtist> existingArtistOptional = Optional.ofNullable(artistRepository.findByNameIgnoreCase(artistName));
 
         String apiKey = "6dbf52676f656a2f3b09a01641bcefe5";
 

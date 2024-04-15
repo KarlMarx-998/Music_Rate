@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Album Info</title>
+</head>
+<body>
+<h1 th:if="${album != null}" th:text="${album.name}">Album Name</h1>
+<div th:if="${album == null}">Album Not Found</div>
+<p>Tracks:
+<ol>
+  <li th:if="${album != null}" th:each="track : ${album.getTracks()}">
+    <span th:text="${track.getName()}"> </span>
+  </li>
+</ol>
+</p>
+</body>
+</html>
