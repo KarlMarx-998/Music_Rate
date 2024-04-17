@@ -51,16 +51,16 @@ public class MyArtist {
         return tags;
     }
 
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
     public Double getRating() {
         return rating;
     }
 
     public void setRating(Double rating) {
         this.rating = rating ;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
     }
 
     public String getSummary() {

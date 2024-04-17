@@ -6,6 +6,9 @@
 <body>
 <h1 th:if="${album != null}" th:text="${album.name}">Album Name</h1>
 <div th:if="${album == null}">Album Not Found</div>
+
+<p>Rating: <span th:text="${myAlbum.getRating()}"></span></p>
+<p>Realise Date: <span th:text="${myAlbum.getReleaseDate()}"></span></p>
 <p>Tracks:
 <ol>
   <li th:if="${album != null}" th:each="track : ${album.getTracks()}">

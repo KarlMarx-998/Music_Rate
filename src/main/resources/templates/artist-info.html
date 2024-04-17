@@ -45,8 +45,8 @@
           type: 'GET',
           data: {artistName: artistName, albumName: albumName},
           success: function(data) {
-            window.location.href = '/album-info?artistName=' + artistName + '&albumName=' + albumName;
-            alert('Album Info: ' + data);
+            window.location.href = '/album-info?artistName=' + encodeURIComponent(artistName) + '&albumName=' + encodeURIComponent(albumName);
+            //alert('Album Info: ' + data);
           },
           error: function(xhr, status, error) {
             console.log('Error:', error);
