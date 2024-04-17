@@ -78,12 +78,8 @@ public class AlbumController {
             Album album = Album.getInfo(artistName, albumName, apiKey);
             model.addAttribute("album", album);
 
-            List<Track> tracks = (List<Track>) album.getTracks();
-            System.out.println("Album: " + album.getName());
-            System.out.println("Tracks: ");
-            for(int i =0; i < tracks.size(); i++){
-                System.out.println("track " + (i+1) + ":" + tracks.get(i).getName());
-            }
+            System.out.println("ReleaseDate: " + album.getReleaseDate());
+            trackList(album);
 
         }catch (RuntimeException e){
             model.addAttribute("error", e.getMessage());
@@ -92,12 +88,7 @@ public class AlbumController {
             try {Album album = Album.getInfo(artistName, albumName, apiKey);
                 model.addAttribute("album", album);
 
-                List<Track> tracks = (List<Track>) album.getTracks();
-                System.out.println("Album: " + album.getName());
-                System.out.println("Tracks: ");
-                for(int i =0; i < tracks.size(); i++){
-                    System.out.println("track " + (i+1) + ":" + tracks.get(i).getName());
-                }
+                trackList(album);
                 MyAlbum myAlbum = AlbumMapper.mapFromLastFmAlbum(album, albumArtist.getId());
                 MyAlbum savedAlbum = albumRepository.save(myAlbum);
                 model.addAttribute("myAlbum", savedAlbum);
@@ -108,5 +99,14 @@ public class AlbumController {
             }
         }
         return "album-info";
+    }
+
+    private void trackList(Album album) {
+        List<Track> tracks = (List<Track>) album.getTracks();
+        System.out.println("Album: " + album.getName());
+        System.out.println("Tracks: ");
+        for(int i =0; i < tracks.size(); i++){
+            System.out.println("track " + (i+1) + ":" + tracks.get(i).getName());
+        }
     }
 }

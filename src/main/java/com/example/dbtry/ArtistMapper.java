@@ -10,7 +10,11 @@ public class ArtistMapper {
         myArtist.setName(lastFmArtist.getName());
         myArtist.setRating(10.0);
         myArtist.setTags(String.join(", ",(lastFmArtist.getTags())));
-        myArtist.setSummary(lastFmArtist.getWikiSummary());
+        String summary = lastFmArtist.getWikiSummary();
+
+        // Удаляем ссылку на last.fm из summary, если она присутствует
+        summary = summary.replaceAll("<a[^>]*>(.*?)</a>", "");
+        myArtist.setSummary(summary);
         myArtist.setListeners((lastFmArtist.getListeners()));
 
         return myArtist;
