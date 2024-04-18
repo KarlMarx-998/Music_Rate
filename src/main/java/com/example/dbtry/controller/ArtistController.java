@@ -3,15 +3,15 @@ package com.example.dbtry.controller;
 import com.example.dbtry.ArtistMapper;
 import com.example.dbtry.DAO.ArtistRepository;
 import com.example.dbtry.entity.MyArtist;
-import de.umass.lastfm.Album;
-import de.umass.lastfm.Artist;
-import de.umass.lastfm.Caller;
+import de.umass.lastfm.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +45,9 @@ public class ArtistController {
             try {
                 Artist artist = Artist.getInfo(artistName, apiKey);
                 model.addAttribute("artist", artist);
+                String imageUrl = getImageUrl(artist.getName());
+                model.addAttribute("imageUrl", imageUrl);
+
                 List<Album> album = (List<Album>) Artist.getTopAlbums(artistName, apiKey)
                         .stream()
                         .filter(item-> !item.getName().equals("(null)"))
@@ -88,8 +91,25 @@ public class ArtistController {
 
         }
 
+
         return "artist-info";
 
+    }
+
+    private String getImageUrl(String artistName) {
+        try {
+            String apiKey = "AIzaSyAoM50yYb9inGuFwFFr8DtZO_lHmF_V0uQ";
+            String searchEngineId = "72a055435140d4ac0";
+            String apiUrl = "https://www.googleapis.com/customsearch/v1?key=" + apiKey +
+                    "&cx=" + searchEngineId +
+                    "&q=" + URLEncoder.encode(artistName, "UTF-8") +
+                    "&searchType=image";
+            // Вызываем метод ImageTry.main() и получаем URL изображения
+            return ImageUrl.getArtistImageUrl(apiUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
