@@ -28,6 +28,13 @@ public class ArtistController {
     @GetMapping("/")
     public String showForm() {return "artist-form";}
 
+    @GetMapping("/popular-artists")
+    public String showPopularArtists(Model model) {
+        List<MyArtist> popularArtists = artistRepository.findTop8ByOrderByListenersDesc();
+        model.addAttribute("popularArtists", popularArtists);
+        return "popular-artists";
+    }
+
         @PostMapping("/search")
     public String searchArtist(@RequestParam("artistName") String artistName, Model model){
         Caller.getInstance().setUserAgent("MusicRate");
@@ -94,6 +101,54 @@ public class ArtistController {
 
         return "artist-info";
 
+    }
+    @GetMapping("/artist-info")
+    public String showArtistInfo(@RequestParam("artistName") String artistName, Model model){
+
+        Caller.getInstance().setUserAgent("MusicRate");
+
+        // Поиск исполнителя по имени в базе данных
+        Optional<MyArtist> existingArtistOptional = Optional.ofNullable(artistRepository.findByNameIgnoreCase(artistName));
+
+        // Если исполнитель найден, добавляем его в модель
+        if (existingArtistOptional.isPresent()) {
+            MyArtist existingArtist = existingArtistOptional.get();
+            model.addAttribute("myArtist", existingArtist);
+
+            // Получаем информацию об исполнителе и добавляем в модель
+            String apiKey = "6dbf52676f656a2f3b09a01641bcefe5";
+            try {
+                Artist artist = Artist.getInfo(artistName, apiKey);
+                model.addAttribute("artist", artist);
+
+                // Получаем URL изображения исполнителя и добавляем в модель
+                String imageUrl = getImageUrl(artist.getName());
+                model.addAttribute("imageUrl", imageUrl);
+
+                // Получаем топ-альбомы исполнителя и добавляем в модель
+                List<Album> album = (List<Album>) Artist.getTopAlbums(artistName, apiKey)
+                        .stream()
+                        .filter(item -> !item.getName().equals("(null)"))
+                        .collect(Collectors.toList());
+
+                List<String> albums = new ArrayList<>();
+
+                for (int i = 0; i < 5 && i < album.size(); i++) {
+                    albums.add(album.get(i).getName());
+                    System.out.println(albums.get(i));
+                }
+                model.addAttribute("albums", albums);
+            } catch (RuntimeException e) {
+                model.addAttribute("error", e.getMessage());
+            }
+        } else {
+            // Если исполнитель не найден в базе данных
+            model.addAttribute("error", "Artist not found: " + artistName);
+        }
+
+        // Возвращаем имя HTML-шаблона для отображения информации об исполнителе
+
+        return "artist-info";
     }
 
     private String getImageUrl(String artistName) {

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Popular Artists</title>
+</head>
+<body>
+
+<h2>Popular Artists</h2>
+
+<ul>
+  <li th:each="artist : ${popularArtists}">
+    <a th:href="@{'/artist-info?artistName=' + ${artist.name}}" th:text="${artist.name}"></a>
+  </li>
+</ul>
+
+</body>
+</html>
